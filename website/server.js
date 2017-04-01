@@ -4,7 +4,7 @@ let express = require('express')
 let app = express()
 
 app.use('/api/v1', require('./api'))
-// app.use('/', requireg('./webapp'))
+app.use(express.static('public'))
 
 app.get('/', function (req, res) {
   res.send('Hello World!')
