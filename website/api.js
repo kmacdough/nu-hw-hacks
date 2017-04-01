@@ -1,8 +1,9 @@
 'use strict'
 
 let express = require('express');
-
+let multer  = require('multer');
 let router = express.Router();
+let upload = multer();
 
 var lastMove = {
   dir: "stop",
@@ -37,6 +38,17 @@ router.get('/getmove', (req, res) => {
   res.json(lastMove);
 })
 
+var imgbuffer = new Buffer([]);
 
+router.post('/img', upload.single('file'), (req,res) => {
+  imgbuffer = req.file.buffer;
+  res.send('1');
+})
+
+router.get('/img', (req, res) => {
+  res.type('jpeg');
+  res.set('Cache-Control', 'no-store');
+  res.send(imgbuffer);
+})
 
 module.exports = router

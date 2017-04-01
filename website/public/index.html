@@ -8,13 +8,36 @@
         <h1>Drone Control</h1>
 
         <div class='flex'>
-            <div class='box'>
+            <div class='box' style='text-align: center;'>
                 <h2>Video</h2>
+                <img id='image' src='/api/v1/img' alt='feed'/><br>
+                <input type='checkbox' name='live' id='live' checked/>
+                <input type="number" name='delay' value='250' id='delay'/>
             </div>
             
             <div class='box'>
                 <h2>Control</h2>
             </div>
         </div>
+        <script type='text/javascript'>
+            var live = document.getElementById('live');
+            var image = document.getElementById('image');
+            function imageLoad() {
+                if(live.checked) {
+                    var delay = document.getElementById('delay').value;
+                    window.setTimeout(reloadImage, delay);
+                }
+            }
+            function reloadImage() {
+                image.src = "/api/v1/img?random=" + (new Date()).getMilliseconds();
+            }
+            live.onchange = function() {
+                if(live.checked) {
+                    reloadImage();
+                }
+            }
+            image.onload = imageLoad;
+            reloadImage();
+        </script>
     </body>
 </html>
