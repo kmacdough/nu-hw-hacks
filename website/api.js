@@ -6,8 +6,9 @@ let router = express.Router();
 let upload = multer();
 
 var lastMove = {
-  dir: "stop",
-  speed: 0
+  // direction vector { [0,360), [0,1] }
+  dir: [0,0],
+  vertical: 0
 }
 
 var resetAt = Date()
@@ -15,11 +16,11 @@ let resetAfterSec = 5;
 
 router.get('/move', (req, res) => {
   let dir = req.query.dir
-  let speed = req.query.speed
+  let vertical = req.query.vertical
   res.send('You moved ' + speed + ' meters ' + dir);
   lastMove = {
     dir: dir,
-    speed: speed
+    vertical: vertical
   }
   resetAt = new Date((new Date()).getTime() + resetAfterSec * 1000);
 
@@ -27,8 +28,8 @@ router.get('/move', (req, res) => {
   setTimeout(() => {
     if ((new Date()).getTime() > resetAt.getTime()) {
       lastMove = {
-        dir: "stop",
-        speed: 0
+        dir: [0,0],
+        vertical: 0
       }
     }
   }, resetAfterSec * 1000 + 200);
