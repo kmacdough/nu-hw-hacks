@@ -41,7 +41,6 @@ router.get('/getmove', (req, res) => {
 var imgbuffer = new Buffer([]);
 
 router.post('/img', upload.single('file'), (req,res) => {
-  console.log(req);
   imgbuffer = req.file.buffer;
   res.send('1');
 })
