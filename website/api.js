@@ -20,17 +20,17 @@ router.get('/move', (req, res) => {
     dir: dir,
     speed: speed
   }
-  reset = Date(Date.getTime() + resetAfterSec * 1000);
+  resetAt = new Date((new Date()).getTime() + resetAfterSec * 1000);
 
   // Autoreset
-  SetTimeout(() => {
-    if (Date() > resetAt) {
+  setTimeout(() => {
+    if ((new Date()).getTime() > resetAt.getTime()) {
       lastMove = {
         dir: "stop",
         speed: 0
       }
     }
-  }, resetAfterSec * 1000)
+  }, resetAfterSec * 1000 + 200);
 });
 
 router.get('/getmove', (req, res) => {
