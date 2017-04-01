@@ -14,16 +14,16 @@ var lastMove = {
 var resetAt = Date()
 let resetAfterSec = 5;
 
-router.get('/move', (req, res) => {
+router.post('/move', (req, res) => {
   let dir = req.query.dir
   let vertical = req.query.vertical
-  res.send('You moved ' + speed + ' meters ' + dir);
   lastMove = {
     dir: dir,
     vertical: vertical
   }
   resetAt = new Date((new Date()).getTime() + resetAfterSec * 1000);
 
+  res.json({"status":"ok"})
   // Autoreset
   setTimeout(() => {
     if ((new Date()).getTime() > resetAt.getTime()) {
@@ -35,7 +35,7 @@ router.get('/move', (req, res) => {
   }, resetAfterSec * 1000 + 200);
 });
 
-router.get('/getmove', (req, res) => {
+router.get('/move', (req, res) => {
   res.json(lastMove);
 })
 
@@ -43,7 +43,7 @@ var imgbuffer = new Buffer([]);
 
 router.post('/img', upload.single('file'), (req,res) => {
   imgbuffer = req.file.buffer;
-  res.send('1');
+  res.send('');
 })
 
 router.get('/img', (req, res) => {
