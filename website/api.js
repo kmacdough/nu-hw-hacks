@@ -21,7 +21,7 @@ router.post('/controller', jsonParser, (req, res) => {
   lastMove = req.body
   resetAt = new Date((new Date()).getTime() + resetAfterSec * 1000);
 
-  res.json({"status":"ok"})
+  res.send('')
   // Autoreset
   setTimeout(() => {
     if ((new Date()).getTime() > resetAt.getTime()) {
@@ -35,6 +35,20 @@ router.post('/controller', jsonParser, (req, res) => {
 
 router.get('/controller', (req, res) => {
   res.json(lastMove);
+})
+
+var gps = {
+  "lat": 0,
+  "lng": 0,
+  "alt": 0
+}
+router.post('/gps', jsonParser, (req, res) => {
+  gps = req.body
+  res.send('')
+})
+
+router.get('/gps', (req, res) => {
+  res.json()
 })
 
 var imgbuffer = new Buffer([]);
