@@ -44,13 +44,26 @@
             image.onload = imageLoad;
             reloadImage();
             var control = Control.init('#control');
-            
-            setInterval(function() {
-                var req = new XMLHttpRequest();
-                req.open("POST", "/api/v1/controller");
-                req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-                req.send(JSON.stringify(control.state));
-            }, 100)
+            var lastChange = new Date();
+            var min = 50;
+            var changeScheduled = false;
+            control.onchange = function() {
+                if((new Date()).getTime() - lastChange.getTime() > min) {
+                    changeScheduled = false;
+                    var req = new XMLHttpRequest();
+                    req.open("POST", "/api/v1/controller");
+                    req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                    req.send(JSON.stringify(control.state));
+                    lastChange = new Date();
+                    console.log(JSON.stringify(control.state));
+                } else {
+                    changeScheduled = true;
+                    setTimeout(function() {
+                        if(changeScheduled)
+                            control.onchange();
+                    }, (new Date()).getTime() - lastChange.getTime());
+                }
+            };
         </script>
     </body>
 </html>
