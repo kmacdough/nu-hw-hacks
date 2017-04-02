@@ -74,7 +74,7 @@ var Stick = function(root, size) {
     var knob = document.createElement("span");
     knob.className = "knob";
     this.root.appendChild(knob);
-    knob.onmousedown = this.mouseDown.bind(this);
+    this.root.onmousedown = this.mouseDown.bind(this);
     this.knob = knob;
     this.positionKnob(this.range, this.range);
     
