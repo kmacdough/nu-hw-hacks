@@ -55,7 +55,6 @@
                     req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
                     req.send(JSON.stringify(control.state));
                     lastChange = new Date();
-                    console.log(JSON.stringify(control.state));
                 } else {
                     changeScheduled = true;
                     setTimeout(function() {
