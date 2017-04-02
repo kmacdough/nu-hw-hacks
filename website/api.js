@@ -2,25 +2,23 @@
 
 let express = require('express');
 let multer  = require('multer');
+
+let bodyParser = require('body-parser');
+let jsonParser = bodyParser.json();
+
 let router = express.Router();
 let upload = multer();
 
 var lastMove = {
-  // direction vector { [0,360), [0,1] }
-  dir: [0,0],
-  vertical: 0
+  left: [0,0],
+  right: [0,0]
 }
 
 var resetAt = Date()
-let resetAfterSec = 5;
+let resetAfterSec = 1;
 
-router.post('/move', (req, res) => {
-  let dir = req.query.dir
-  let vertical = req.query.vertical
-  lastMove = {
-    dir: dir,
-    vertical: vertical
-  }
+router.post('/controller', jsonParser, (req, res) => {
+  lastMove = req.body
   resetAt = new Date((new Date()).getTime() + resetAfterSec * 1000);
 
   res.json({"status":"ok"})
@@ -28,14 +26,14 @@ router.post('/move', (req, res) => {
   setTimeout(() => {
     if ((new Date()).getTime() > resetAt.getTime()) {
       lastMove = {
-        dir: [0,0],
-        vertical: 0
+        left: [0,0],
+        right: [0,0]
       }
     }
   }, resetAfterSec * 1000 + 200);
 });
 
-router.get('/move', (req, res) => {
+router.get('/controller', (req, res) => {
   res.json(lastMove);
 })
 

@@ -1,0 +1,19 @@
+.control {
+    
+}
+
+.stick {
+    background-color: rgba(255,255,255,0.25);
+    display: inline-block;
+    border: 1px solid black;
+    margin: 5px;
+}
+
+.knob {
+    background-color: black;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    position: relative;
+    display: inline-block;
+}

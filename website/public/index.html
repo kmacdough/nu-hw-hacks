@@ -3,6 +3,8 @@
     <head>
         <title>Drone</title>
         <link rel='stylesheet' type='text/css' href='/css/style.css'/>
+        <link rel='stylesheet' type='text/css' href='/css/control.css'/>
+        <script type='text/javascript' src='js/control.js'></script>
     </head>
     <body>
         <h1>Drone Control</h1>
@@ -17,8 +19,11 @@
             
             <div class='box'>
                 <h2>Control</h2>
+                <div id="control">
+                </div>
             </div>
         </div>
+
         <script type='text/javascript'>
             var live = document.getElementById('live');
             var image = document.getElementById('image');
@@ -38,6 +43,14 @@
             }
             image.onload = imageLoad;
             reloadImage();
+            var control = Control.init('#control');
+            
+            setInterval(function() {
+                var req = new XMLHttpRequest();
+                req.open("POST", "/api/v1/controller");
+                req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                req.send(JSON.stringify(control.state));
+            }, 100)
         </script>
     </body>
 </html>
