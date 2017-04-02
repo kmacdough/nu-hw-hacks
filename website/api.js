@@ -51,6 +51,18 @@ router.get('/gps', (req, res) => {
   res.json(gps)
 })
 
+var heading = {
+  "heading": 0
+}
+router.post('/heading', jsonParser, (req, res) => {
+  heading = req.body
+  res.send('')
+})
+
+router.get('/heading', (req, res) => {
+  res.json(heading)
+})
+
 var imgbuffer = new Buffer([]);
 
 router.post('/img', upload.single('file'), (req,res) => {
