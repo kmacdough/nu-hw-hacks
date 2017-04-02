@@ -48,7 +48,7 @@ router.post('/gps', jsonParser, (req, res) => {
 })
 
 router.get('/gps', (req, res) => {
-  res.json()
+  res.json(gps)
 })
 
 var imgbuffer = new Buffer([]);
